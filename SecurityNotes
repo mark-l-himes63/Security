@@ -2,7 +2,7 @@ Grey Host Stuff
 Stack Number: 4
 CTFD Username: MAHI-004-M
 Password (Both CTFD and Grey Host): yqSFrkDXseUTqDl
-lin.internet: 10.50.23.55
+lin.internet: 10.50.23.55  (Grey Host IP)
 grey host username: student
 
 FG: https://sec.cybbh.io/public/security/latest/index.html
@@ -20,7 +20,8 @@ Ping Sweep - Code:
                   
                   #Port Discovery
                   nmap -Pn -T4 --min-rate=8675309 -sT 192.169.28.1 -p22,80
-                  #add --script as needed
+                  #add --script as neededssh student@<Grey Host IP> -L<RHP>:<tgt IP>:<tgt port> #The Tunneling method
+
 
                   #Port Interrogation
                   nc 192.168.28.1 22
@@ -31,4 +32,20 @@ nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-enum        
 nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-robots.txt    ##Tells you about Robots
 nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=smb-os-discovery   ##Allows you to pull info from port 445 (smb is only for windows, the apache services are only on linux)
 
+ssh student@<Grey Host IP> -L<RHP>:<tgt IP>:<tgt port> #The Tunneling method
+
 Control Sockets: 
+lin-ops> ssh -MS /tmp/gray student@10.50.23.55
+*New Window*
+lin-ops> ssh -S /tmp/gray dummy
+
+lin-ops> ssh -S /tmp/gray dummy -O forward -L1111:192.168.28.111:80    connect to machine (nothing will happen but port 1111 will be open)
+lin-ops> ssh -S /tmp/gray dummy -O forward -L2222:192.168.28.111:8080
+
+firefox: 127.0.0.1:1111 To see the website
+
+lin-ops> ssh -S /tmp/gray dummy -O cancel -L2222:192.168.28.111:8080  To cancel the connection to that port (connection is still open)
+
+
+
+
