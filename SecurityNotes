@@ -6,3 +6,29 @@ lin.internet: 10.50.23.55
 grey host username: student
 
 FG: https://sec.cybbh.io/public/security/latest/index.html
+
+Scanning Techniques: Host Discovery - Ping
+                     Port Enumeration - Nmap ***Dont trust the "Service" part, that could be fake. Banner grab (netcat) to figure out what's actually running
+                     Port Interrogation - NetCat
+
+Web Scraping: Method of pulling info from a website (code in scraper.py on Linux OpStation)
+
+Ping Sweep - Code:
+                  #!/usr/sbin/python3
+                  #Host Discovery
+                  for i in {1..254}; do (ping -c1 192.168.28.$i | grep "bytes from" &); done
+                  
+                  #Port Discovery
+                  nmap -Pn -T4 --min-rate=8675309 -sT 192.169.28.1 -p22,80
+                  #add --script as needed
+
+                  #Port Interrogation
+                  nc 192.168.28.1 22
+                  *press enter*
+
+Nmap Scripts:
+nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-enum          ##Tells you about the HTML file
+nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-robots.txt    ##Tells you about Robots
+nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=smb-os-discovery   ##Allows you to pull info from port 445 (smb is only for windows, the apache services are only on linux)
+
+Control Sockets: 
