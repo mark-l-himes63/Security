@@ -55,7 +55,8 @@ HTTP Methods: - GET --> Typing into a URL bar
 wget: wget -r -l2 -P /tmp ftp://ftpserver/ #Do not wget a website
 curl: curl -o stuff.html https://web.site/stuff.html
 
-robots.txt: Shows you directories you may not know about -> http(s)://url/robots.txt
+robots.txt: Shows you directories you may not know about -> http(s)://url/robots.txt 
+                                                            Any Directories found in this file may be accessible in the url --> localhost:1111/net_test if /net_test was on robots.txt
 
 Exploitation Methods: - Server-Side Injection: Really only gets you /etc/passwd and /etc/hosts files (could find next hop or box from these)
                       - Malicious File Upload: Upload a file that allows you to inject cmds
