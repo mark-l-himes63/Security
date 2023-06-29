@@ -74,7 +74,7 @@ Exploitation Methods: - Server-Side Injection: Really only gets you /etc/passwd 
                                                 </pre>
                                                 </BODY></HTML>
 
-                      - Command Injection: Inject cmds to gain access to back-end
+                      - Command Injection: Inject cmds to gain access to back-end     ##To find box where you can run cmds, test ";whoami" on every text or input box -- ";" must go before cmd 
                                            cmd to upload is in the pasta on linux
                       - Directory Traversal:
                       - Cross-Site Scripting: <script>alert('meow');</script>  #Dont worry about this one
