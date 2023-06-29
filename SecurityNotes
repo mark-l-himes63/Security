@@ -20,7 +20,8 @@ Ping Sweep - Code:
                   
                   #Port Discovery
                   nmap -Pn -T4 --min-rate=8675309 -sT 192.169.28.1 -p22,80
-                  #add --script as neededssh student@<Grey Host IP> -L<RHP>:<tgt IP>:<tgt port> #The Tunneling method
+                  #add --script as needed
+                  ssh student@<Grey Host IP> -L<RHP>:<tgt IP>:<tgt port> #The Tunneling method
 
 
                   #Port Interrogation
@@ -45,7 +46,19 @@ lin-ops> ssh -S /tmp/gray dummy -O forward -L2222:192.168.28.111:8080
 firefox: 127.0.0.1:1111 To see the website
 
 lin-ops> ssh -S /tmp/gray dummy -O cancel -L2222:192.168.28.111:8080  To cancel the connection to that port (connection is still open)
+-------
+Web Exploitation: The Hacking part (Less spicy than you think it is)
+HTTP Methods: - GET --> Typing into a URL bar
+              - POST --> Typing into a box
+              - HEAD
+              - PUT
+wget: wget -r -l2 -P /tmp ftp://ftpserver/ #Do not wget a website
+curl: curl -o stuff.html https://web.site/stuff.html
+
+robots.txt: Shows you directories you may not know about -> http(s)://url/robots.txt
 
 
 
 
+
+           
