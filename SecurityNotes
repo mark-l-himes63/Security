@@ -57,8 +57,10 @@ curl: curl -o stuff.html https://web.site/stuff.html
 
 robots.txt: Shows you directories you may not know about -> http(s)://url/robots.txt
 
-
-
+Exploitation Methods: - Server-Side Injection: Really only gets you /etc/passwd and /etc/hosts files (could find next hop or box from these)
+                      - Malicious File Upload: 
+                      - Command Injection: 
+                       
 
 
            
