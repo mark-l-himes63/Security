@@ -42,6 +42,7 @@ lin-ops> ssh -S /tmp/gray dummy
 
 lin-ops> ssh -S /tmp/gray dummy -O forward -L1111:192.168.28.111:80    connect to machine (nothing will happen but port 1111 will be open)
 lin-ops> ssh -S /tmp/gray dummy -O forward -L2222:192.168.28.111:8080
+lin-ops> ssh -S /tmp/blue smart -O forward -D9050
 
 firefox: 127.0.0.1:1111 To see the website
 
