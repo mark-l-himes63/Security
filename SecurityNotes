@@ -144,6 +144,7 @@ Words to Know: Heap - A "Heap" of memory to be allocated for use
                CONTROL REGISTER - A processor register that changes or controls the behavior of a CPU
                FLAGS REGISTER - Contains the current state of the processor               
 
+Common Instruction Pointers: 
 MOV - move source to destination
 PUSH - push source onto stack
 POP - Pop top of stack to destination
