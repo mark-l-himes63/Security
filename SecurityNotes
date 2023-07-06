@@ -157,6 +157,16 @@ JMP - Jump to specified location
 JLE - Jump if less than or equal
 JE - Jump if equal
 
+----------------
+Exploit Development    wiremask.eu
+Buffer Overflow Common Terms: HEAP - Memory that can be allocated and deallocated
+                              STACK - A contiguous section of memory used for passing arguments
+                              REGISTERS - Storage elements as close as possible to the central processing unit (CPU)
+                              INSTRUCTION POINTER (IP) - a.k.a Program Counter (PC), contains the address of next instruction to be executed
+                              STACK POINTER (SP) - Contains the address of the next available space on the stack
+                              BASE POINTER (BP) - The base of the stack
+                              FUNCTION - Code that is separate from the main program that is often used to replace code the repeats in order to make the program smaller and more efficient
+                              SHELLCODE - The code that is executed once an exploit successfully takes advantage of a vulnerability
 
 
 
