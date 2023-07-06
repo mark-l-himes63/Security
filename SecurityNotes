@@ -31,7 +31,7 @@ Ping Sweep - Code:
 Nmap Scripts:
 nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-enum          ##Tells you about the HTML file
 nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-robots.txt    ##Tells you about Robots
-nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=smb-os-discovery   ##Allows you to pull info from port 445 (smb is only for windows, the apache services are only on linux)
+nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p139,445 --script=smb-os-discovery   ##Allows you to pull info from port 445 (smb is only for windows, the apache services are only on linux)
 
 ssh student@<Grey Host IP> -L<RHP>:<tgt IP>:<tgt port> #The Tunneling method
 
