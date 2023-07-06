@@ -168,7 +168,8 @@ Buffer Overflow Common Terms: HEAP - Memory that can be allocated and deallocate
                               FUNCTION - Code that is separate from the main program that is often used to replace code the repeats in order to make the program smaller and more efficient
                               SHELLCODE - The code that is executed once an exploit successfully takes advantage of a vulnerability
 
-
+msfvenom -p linux/x86/exec CMD=whoami -b '\x00' -f python
+msfvenom -p linux/x86/exec CMD="whoami && ifconfig" -b '\x00' -f python
 
 
 
