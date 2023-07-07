@@ -171,7 +171,7 @@ Buffer Overflow Common Terms: HEAP - Memory that can be allocated and deallocate
 msfvenom -p linux/x86/exec CMD=whoami -b '\x00' -f python
 msfvenom -p linux/x86/exec CMD="whoami && ifconfig" -b '\x00' -f python
 
-Recap:
+Recap: FOLLOW THE FG DEMO!!!
 Figure Out what normal looks like, interact with the program
 
 ./func <<<$(python mycode.py)    #User Input
