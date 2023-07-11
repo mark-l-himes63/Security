@@ -318,7 +318,10 @@ s.send(buf) #Sends the variable buf
 print s.recv(1024) #Print response
 s.close() #close the connection
 
+---------------------
+Post Exploitation
 
+how to use private ssh key: ssh -i <id_rsa> student@<tgt IP>
 
 
            ASD
