@@ -357,5 +357,6 @@ find / -type f -perm /4000 -ls 2>/dev/null
 
 find . -exec /bin/sh -p \; -quit
 
+find / -type d -perm /2 2>/dev/null
 
            ASD
