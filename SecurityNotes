@@ -360,3 +360,15 @@ find . -exec /bin/sh -p \; -quit
 find / -type d -perm /2 2>/dev/null
 
            ASD
+
+
+Review: 
+       Recon --> Ping sweep, nmap, netcat (banner grabbing), find the webpage if port 80 is open
+                 nmap --> robots.txt, http-enum
+       
+       Get onto the Webpage --> Cmd, SQL injection (Gold.txt) --> If you can run cmds, you can upload your ssh public key
+
+       From the box: look at files they got --> /etc/hosts, /etc/passwd (find other boxes)
+                     Find a new box? You start back over at recon
+
+Dry Run IP: 10.50.28.45
